@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Economia de Energia</title>
+</head>
+<body>
+    <h1>Calculadora de Economia de Energia</h1>
+    <form action="{% url 'calculator:calculator' %}" method="post">
+        {% csrf_token %}
+        <label for="name">Nome:</label>
+        <input type="text" id="name" name="name" required><br><br>
+        
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="address">Endereço:</label>
+        <input type="text" id="address" name="address" required><br><br>
+
+        <label for="consumption1">Consumo Mês 1 (kWh):</label>
+        <input type="number" id="consumption1" name="consumption1" required><br><br>
+        
+        <label for="consumption2">Consumo Mês 2 (kWh):</label>
+        <input type="number" id="consumption2" name="consumption2" required><br><br>
+
+        <label for="consumption3">Consumo Mês 3 (kWh):</label>
+        <input type="number" id="consumption3" name="consumption3" required><br><br>
+
+        <label for="tariff_type">Tarifa:</label>
+        <select id="tariff_type" name="tariff_type" required>
+            <option value="">Selecione uma tarifa</option>
+            {% for tariff in tariffs %}
+                <option value="{{ tariff.id }}">{{ tariff.name }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label for="consumer_type">Tipo de Consumidor:</label>
+        <select id="consumer_type" name="consumer_type">
+            <option value="">Selecione o tipo</option>
+            <option value="Residencial">Residencial</option>
+            <option value="Comercial">Comercial</option>
+            <option value="Industrial">Industrial</option>
+        </select><br><br>
+
+        <label for="consumption_range">Intervalo de Consumo (kWh):</label>
+        <select id="consumption_range" name="consumption_range">
+            <option value="">Selecione o intervalo</option>
+            <option value="0-10000">0 - 10.000</option>
+            <option value="10001-20000">10.001 - 20.000</option>
+            <option value="20001+">Acima de 20.000</option>
+        </select><br><br>
+        
+
+        <button type="submit">Calcular</button>
+        <a href="{% url 'calculator:add_consumer' %}">Adicionar Consumidor</a>
+    </form>
+</body>
+</html>
